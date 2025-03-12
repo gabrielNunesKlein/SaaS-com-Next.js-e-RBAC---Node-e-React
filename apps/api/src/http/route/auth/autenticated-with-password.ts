@@ -13,7 +13,15 @@ export async function autenticationWithPassword(app: FastifyInstance){
                 body: z.object({
                     email: z.string().email(),
                     password: z.string()
-                })
+                }),
+                response: {
+                    201: z.object({
+                        token: z.string()
+                    }),
+                    400: z.object({
+                        message: z.string()
+                    })
+                }
             }
         },
         async (request, reply) => {
@@ -28,7 +36,7 @@ export async function autenticationWithPassword(app: FastifyInstance){
             }
 
             if(userFromEmail.passwordHash === null){
-                return reply.status(400).send({ menssage: 'User does not have a password, use social login.'})
+                return reply.status(400).send({ message: 'User does not have a password, use social login.'})
             }
 
             const isPassword = await compare(password, userFromEmail.passwordHash)
