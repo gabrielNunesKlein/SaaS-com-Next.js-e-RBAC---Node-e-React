@@ -12,11 +12,14 @@ import {
 import { createAccount } from './route/auth/create-account'
 import { autenticationWithPassword } from './route/auth/autenticated-with-password'
 import { getProfile } from './route/auth/get-profile'
+import { errorHandler } from './erro-handler'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
 app.setSerializerCompiler(serializerCompiler)
 app.setValidatorCompiler(validatorCompiler)
+
+app.setErrorHandler(errorHandler)
 
 app.register(fastifySwagger, {
   openapi: {
