@@ -4,6 +4,7 @@ import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import z from "zod";
 import { BadRequestError } from "../_error/bad-request-error";
+import { env } from "@saas/env";
 
 export async function autenticationWithGithub(app: FastifyInstance){
     app.withTypeProvider<ZodTypeProvider>().post('/sessions/github',
@@ -31,9 +32,9 @@ export async function autenticationWithGithub(app: FastifyInstance){
                 `https://github.com/login/oauth/access_token`
             )
 
-            githubUrl.searchParams.set('client_id', 'Ov23lizDfbuG5qSbJyGy')
-            githubUrl.searchParams.set('client_secret', 'ce65bf34684e18b7a2f92c1bfeada5edffa1b420')
-            githubUrl.searchParams.set('redirect_uri', 'http://localhost:3000/api/auth/callback')
+            githubUrl.searchParams.set('client_id', env.GITHUB_OATH_CLIENT_ID)
+            githubUrl.searchParams.set('client_secret', env.GITHUB_OATH_SECRET)
+            githubUrl.searchParams.set('redirect_uri', env.GITHUB_OATH_CLIENT_REDIRECT_URI)
             githubUrl.searchParams.set('code', code)
 
             const githubAccessToken = await fetch(githubUrl, {
@@ -44,7 +45,6 @@ export async function autenticationWithGithub(app: FastifyInstance){
             })
 
             const githubAccessData = await githubAccessToken.json()
-            console.log('githubAccessData >>> ', githubAccessData)
 
             const { access_token: gitHibAccessToken } = z.object({
                 access_token: z.string(),
