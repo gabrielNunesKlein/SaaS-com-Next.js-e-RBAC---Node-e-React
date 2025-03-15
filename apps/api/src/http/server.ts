@@ -15,6 +15,7 @@ import { getProfile } from './route/auth/get-profile'
 import { errorHandler } from './erro-handler'
 import { requestPasswordRecover } from './route/auth/request-password-recover'
 import { resetPassword } from './route/auth/reset-password'
+import { autenticationWithGithub } from './route/auth/autenticated-with-github'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -50,6 +51,7 @@ app.register(autenticationWithPassword)
 app.register(getProfile)
 app.register(requestPasswordRecover)
 app.register(resetPassword)
+app.register(autenticationWithGithub)
 
 app.listen({port: 3333}).then(() => {
     console.log('HTTP server runing!')
