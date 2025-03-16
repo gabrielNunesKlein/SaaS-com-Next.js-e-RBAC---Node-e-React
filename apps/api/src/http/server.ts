@@ -18,6 +18,7 @@ import { resetPassword } from './route/auth/reset-password'
 import { autenticationWithGithub } from './route/auth/autenticated-with-github'
 import { env } from '@saas/env'
 import { createOrganization } from './route/orgs/create-org'
+import { getMemberShip } from './route/orgs/get-membership'
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -63,6 +64,7 @@ app.register(requestPasswordRecover)
 app.register(resetPassword)
 app.register(autenticationWithGithub)
 app.register(createOrganization)
+app.register(getMemberShip)
 
 app.listen({port: 3333}).then(() => {
     console.log('HTTP server runing!')
