@@ -14,7 +14,7 @@ export async function deleteProject(app: FastifyInstance){
     app.withTypeProvider<ZodTypeProvider>().register(auth).delete('/organization/:slug/project/:projectId', {
         schema: {
             tags: ['Project'],
-            summary: 'Create a new project',
+            summary: 'Delete project',
             security: [{ bearerAuth: []}],
             params: z.object({
                 slug: z.string(),
