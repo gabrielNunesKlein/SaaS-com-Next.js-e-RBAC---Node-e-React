@@ -5,14 +5,14 @@ import { z } from 'zod'
 import { BadRequestError } from "../_error/bad-request-error";
 import { auth } from "@/http/midlewares/auth";
 
-export async function acceptInvite(app: FastifyInstance){
+export async function rejectInvite(app: FastifyInstance){
 
     app.withTypeProvider<ZodTypeProvider>().register(auth).post(
-      '/invites/:inviteId/accept',
+      '/invites/:inviteId/reject',
       {
         schema: {
           tags: ['Invite'],
-          summary: 'Accept an invite',
+          summary: 'Reject an invite',
           security: [{ bearerAuth: [] }],
           params: z.object({
             inviteId: z.string().uuid(),
@@ -51,21 +51,11 @@ export async function acceptInvite(app: FastifyInstance){
             throw new BadRequestError('This invite belongs to another user.')
         }
 
-        await prisma.$transaction([
-            prisma.member.create({
-                data: {
-                    userId,
-                    organizationId: invite.organizationId,
-                    role: invite.role
-                }
-            }),
-            
-            prisma.invite.delete({
-                where: {
-                    id: invite.id
-                }
-            })
-        ])
+        await prisma.invite.delete({
+            where: {
+                id: invite.id
+            }
+        })
 
         return reply.status(204).send()
       }
