@@ -6,30 +6,37 @@ import Link from 'next/link'
 import React from 'react'
 import { Github } from 'lucide-react'
 
-export default function SignInPage() {
+export default function SignUpPage() {
     return (
         <form className='space-y-4'>
+
+            <div className='space-y-1'>
+                <Label htmlFor="name">Name</Label>
+                <Input name='name' type='text' id='name' />
+            </div>
+
             <div className='space-y-1'>
                 <Label htmlFor="email">E-mail</Label>
                 <Input name='email' type='email' id='email' />
             </div>
+
             <div className='space-y-1'>
                 <Label htmlFor="password">Password</Label>
                 <Input name='password' type='password' id='password' />
+            </div>
 
-                <Link 
-                    href="/auth/forgot-password" 
-                    className='text-sm font-medium text-foreground hover:underline'>
-                Forgot Your password</Link>
+            <div className='space-y-1'>
+                <Label htmlFor="confirmPassword">Confirm Your Password</Label>
+                <Input name='confirmPassword' type='password' id='confirmPassword' />
             </div>
 
             <Button className='w-full' type='submit'>
-                Sign in with e-mail
+                Create Account
             </Button>
 
             <Button className='w-full' variant={'link'} size={'sm'} asChild>
-                <Link href='/auth/sign-up'>
-                    Create a new Account
+                <Link href='/auth/sign-in'>
+                    Already registered? Sign In
                 </Link>
             </Button>
 
