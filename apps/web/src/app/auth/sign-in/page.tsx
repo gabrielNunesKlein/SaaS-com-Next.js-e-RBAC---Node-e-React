@@ -5,10 +5,11 @@ import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import React from 'react'
 import { Github } from 'lucide-react'
+import { signInWithEmailAndPassword } from './actions'
 
 export default function SignInPage() {
     return (
-        <form className='space-y-4'>
+        <form action={signInWithEmailAndPassword} className='space-y-4'>
             <div className='space-y-1'>
                 <Label htmlFor="email">E-mail</Label>
                 <Input name='email' type='email' id='email' />
