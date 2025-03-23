@@ -3,8 +3,11 @@ import React from 'react'
 import ProfileButton from './profile-button'
 import { Slash } from 'lucide-react'
 import OrganizationSWatcher from './organization-swatcher'
+import { ability } from '@/auth/auth'
 
-export default function Header() {
+export default async function Header() {
+
+    const permissions = await ability()
 
     return (
         <div className='mx-auto flex max-w-[1200px] items-center justify-between'>
@@ -15,6 +18,10 @@ export default function Header() {
                 
                 <Slash className='size-3 -rotate-[24deg] text-border' />
                 <OrganizationSWatcher />
+
+                {permissions?.can('get', 'Project') && (
+                    <p>Projetos</p>
+                )}
             </div>
 
             <div className='flex items-center gap-4'>

@@ -6,10 +6,10 @@ import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import Link from 'next/link'
 import { getOrganizations } from '@/http/get-organizations'
 import { cookies } from 'next/headers'
+import { getCurrentOrg } from '@/auth/auth'
 
 export default async function OrganizationSWatcher() {
-    const cookiesStore = await cookies()
-    const org = cookiesStore.get('org')?.value
+    const org = await getCurrentOrg()
 
     const { organizations } = await getOrganizations()
     const currebtOrganization = organizations.find((organization) => organization.slug === org)
