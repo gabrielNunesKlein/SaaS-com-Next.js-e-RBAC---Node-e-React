@@ -9,7 +9,7 @@ interface GetOrganizationsResponse {
     }[]
 }
 
-export async function GetOrganizations() {
+export async function getOrganizations() {
     
     const result = await api.get('organizations').json<GetOrganizationsResponse>()
 
