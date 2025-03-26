@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label'
 import { useFormState } from '@/hooks/use-form-state'
 import { createOrganizationAction } from './actions'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
-import { AlertTriangle } from 'lucide-react'
+import { AlertTriangle, Loader2 } from 'lucide-react'
 
 export default function OrganizationForm() {
 
@@ -77,8 +77,8 @@ export default function OrganizationForm() {
            )}
         </div>
 
-        <Button className="w-full" type="submit">
-          Save organization
+        <Button className="w-full" type="submit" disabled={isPading}>
+            {isPading ? <Loader2 className='size-4 animate-spin' /> : "Save organization" }
         </Button>
       </form>
     )

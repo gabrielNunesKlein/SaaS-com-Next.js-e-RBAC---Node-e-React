@@ -6,7 +6,7 @@ import { Label } from '@/components/ui/label'
 import { Separator } from '@/components/ui/separator'
 import Link from 'next/link'
 import React from 'react'
-import { AlertTriangle, Github } from 'lucide-react'
+import { AlertTriangle, Github, Loader2 } from 'lucide-react'
 import { useFormState } from '@/hooks/use-form-state'
 import { signUpAction } from './actions'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
@@ -22,7 +22,7 @@ export default function SignUpForm() {
                 {success === false && (
                     <Alert variant={'destructive'}>
                         <AlertTriangle className="size-4" />
-                        <AlertTitle>Sign In falied</AlertTitle>
+                        <AlertTitle>Sign Up falied</AlertTitle>
                         <AlertDescription>{message}</AlertDescription>
                     </Alert>
                 )}
@@ -62,7 +62,7 @@ export default function SignUpForm() {
                 </div>
 
                 <Button className="w-full" type="submit">
-                    Create Account
+                    {isPading ? <Loader2 className='size-4 animate-spin' /> : "Create Account" }
                 </Button>
 
                 <Button className="w-full" variant={'link'} size={'sm'} asChild>
