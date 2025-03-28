@@ -4,10 +4,8 @@ import { redirect } from "next/navigation";
 
 export default async function AppLayout({
   children,
-  sheet
 }: Readonly<{
   children: React.ReactNode;
-  sheet: React.ReactNode
 }>) {
   
   if(!await isAutenticated()){
@@ -17,7 +15,6 @@ export default async function AppLayout({
   return (
     <>
       {children}
-      {sheet}
     </>
   );
 }

@@ -6,6 +6,7 @@ import OrganizationSWatcher from './organization-swatcher'
 import { ability } from '@/auth/auth'
 import { Separator } from './ui/separator'
 import ThemeSwatcher from './theme/theme-swatcher'
+import ProjectSwatcher from './project-swatcher'
 
 export default async function Header() {
 
@@ -22,7 +23,10 @@ export default async function Header() {
                 <OrganizationSWatcher />
 
                 {permissions?.can('get', 'Project') && (
-                    <p>Projetos</p>
+                    <>
+                        <Slash className='size-3 -rotate-[24deg] text-border' />
+                        <ProjectSwatcher />
+                    </>
                 )}
             </div>
 
