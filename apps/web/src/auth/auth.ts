@@ -1,3 +1,4 @@
+'use server'
 import { getMemberShip } from "@/http/get-membership";
 import { getProfile } from "@/http/get-profile";
 import { defineAbilityFor } from "@saas/auth";
