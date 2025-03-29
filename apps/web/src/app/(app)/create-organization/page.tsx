@@ -1,5 +1,5 @@
 import React from 'react'
-import OrganizationForm from './organization-form'
+import OrganizationForm from '../org/organization-form'
 import Header from '@/components/header'
 
 export default function CreateOrganization() {
