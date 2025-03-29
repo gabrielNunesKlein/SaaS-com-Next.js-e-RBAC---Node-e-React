@@ -1,8 +1,17 @@
 import Header from '@/components/header'
 import React from 'react'
 import ProjectForm from './project-form'
+import { ability } from '@/auth/auth'
+import { redirect } from 'next/navigation'
 
-export default function CreateOrganizarionPage() {
+export default async function CreateOrganizarionPage() {
+
+    const permissions = await ability()
+    
+    if(permissions?.cannot('create', 'Project')){
+        redirect('/')
+    }
+
     return (
         <div className="py-4 space-y-4">
             <Header />
