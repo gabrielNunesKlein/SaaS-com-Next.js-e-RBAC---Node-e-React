@@ -56,8 +56,8 @@ export async function updateOrganization(app: FastifyInstance){
                 }
             })
 
-            if(organizationByDomain){
-                throw new BadRequestError('Another organization with some already exists.')
+            if(!organizationByDomain){
+                throw new BadRequestError('Another organization with some not exists.')
             }
         }
 

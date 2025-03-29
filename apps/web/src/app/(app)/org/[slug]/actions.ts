@@ -2,6 +2,9 @@
 import { HTTPError } from "ky"
 import { z } from "zod"
 import { createOrganization } from "@/http/create-organization"
+import { updateOrganization } from "@/http/update-organization"
+import { getCurrentOrg } from "@/auth/auth"
+import { revalidateTag } from "next/cache"
 
 const organizationSchema = z.object({
     name: z.string().min(4, { message: 'Please include at last 4 characters.'}),
@@ -37,10 +40,12 @@ const organizationSchema = z.object({
     path: ['domain'],
 })
 
+export type OrganizationSchema = z.infer<typeof organizationSchema>
+
 export async function createOrganizationAction(data: FormData){
+    console.log('Create')
 
     const result = organizationSchema.safeParse(Object.fromEntries(data))
-    console.log('result aqui >>> ', result)
 
     if(!result.success){
         const errors = result.error.flatten().fieldErrors
@@ -56,6 +61,8 @@ export async function createOrganizationAction(data: FormData){
             shouldAttachUsersByDomain
         })
 
+        revalidateTag('organizations')
+
     } catch(error){
         if(error instanceof HTTPError){
             const { message } = await error.response.json()
@@ -67,4 +74,40 @@ export async function createOrganizationAction(data: FormData){
     }
 
     return { success: true, message: 'Successfully saved the organization.', errors: null }
+}
+
+export async function updateOrganizationAction(data: FormData){
+    console.log('Update')
+    const currentOrg = await getCurrentOrg()
+
+    const result = organizationSchema.safeParse(Object.fromEntries(data))
+
+    if(!result.success){
+        const errors = result.error.flatten().fieldErrors
+        return { success: false, message: null, errors }
+    }
+
+    const { name, domain, shouldAttachUsersByDomain } = result.data
+
+    try{
+        await updateOrganization({
+            org: currentOrg!,
+            name,
+            domain,
+            shouldAttachUsersByDomain
+        })
+
+        revalidateTag('organizations')
+
+    } catch(error){
+        if(error instanceof HTTPError){
+            const { message } = await error.response.json()
+
+            return { success: false, message, errors: null }
+        }
+
+        return { success: false, message: 'Erro inesperado', errors: null }
+    }
+
+    return { success: true, message: 'Successfully update the organization.', errors: null }
 }
