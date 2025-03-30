@@ -1,4 +1,5 @@
 import { useState, useTransition } from "react"
+import { requestFormReset } from "react-dom"
 
 interface FormState {
     success: boolean
@@ -26,6 +27,8 @@ export function useFormState(
             const state = await action(data)
             setFormState(state)
         })
+
+        requestFormReset(form)
     }
 
     return [formState, handleAction, isPading] as const
