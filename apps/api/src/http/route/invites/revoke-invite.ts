@@ -9,7 +9,7 @@ import { UnauthorizedError } from "../_error/unauthorized-error";
 
 export async function revokeInvite(app: FastifyInstance){
 
-    app.withTypeProvider<ZodTypeProvider>().register(auth).post(
+    app.withTypeProvider<ZodTypeProvider>().register(auth).delete(
       '/organizations/:slug/invites/:inviteId',
       {
         schema: {
