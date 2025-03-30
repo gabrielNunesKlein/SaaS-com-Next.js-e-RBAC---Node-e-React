@@ -10,6 +10,7 @@ import { ArrowLeftRight, Crown, UserMinus } from 'lucide-react'
 import Image from 'next/image'
 import React from 'react'
 import { removeMemberAction } from './actions'
+import UpdateMemberSelect from './update-member-select'
 
 export default async function MembersList() {
 
@@ -72,6 +73,16 @@ export default async function MembersList() {
                                                 Transfer Ownership
                                             </Button>
                                         )}
+
+                                        <UpdateMemberSelect 
+                                            memberId={member.id} 
+                                            value={member.role}
+                                            disabled={
+                                                member.userId == memberShip.userId ||
+                                                member.userId == organization.ownerId ||
+                                                permissions?.cannot('update', 'User')
+                                            }
+                                        />
 
                                         {permissions?.can('delete', 'User') && (
                                             <form action={removeMemberAction.bind(null, member.id)}>
