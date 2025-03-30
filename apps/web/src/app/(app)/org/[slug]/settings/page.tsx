@@ -4,6 +4,7 @@ import React from 'react'
 import OrganizationForm from '../../organization-form'
 import ShutdownOrganizationButton from './shutdown-organization-button'
 import { getOrganization } from '@/http/get-organization'
+import Belling from './belling'
 
 export default async function SettingsPage() {
     const currentOrg = await getCurrentOrg()
@@ -42,7 +43,9 @@ export default async function SettingsPage() {
           )}
         </div>
 
-        {canGetBilling && <div>Billing</div>}
+        {canGetBilling && 
+            <Belling />
+        }
 
         {canShutdownOrganization && (
           <Card>
