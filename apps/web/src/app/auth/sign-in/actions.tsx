@@ -5,6 +5,7 @@ import { HTTPError } from "ky"
 import { z } from "zod"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
+import { acceptInvite } from "@/http/accept-invite"
 
 const signInSchema = z.object({
     email: z.string().email({ message: 'Prease , provide a valid e-mail'}),
@@ -30,6 +31,16 @@ export async function signInWithEmailAndPassword(data: FormData){
 
         const cookiesStore = await cookies()
         cookiesStore.set('token', token, { path: '/',  maxAge: 60 * 60 * 24 * 7 })
+
+        const inviteId = cookiesStore.get('inviteId')?.value
+        if(inviteId){
+            try {
+                await acceptInvite(inviteId)
+                cookiesStore.delete('inviteId')
+            }catch(err) {
+                //
+            }
+        }
 
     } catch(error){
         if(error instanceof HTTPError){

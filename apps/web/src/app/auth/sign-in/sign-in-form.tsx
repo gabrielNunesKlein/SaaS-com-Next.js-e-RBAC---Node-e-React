@@ -10,12 +10,15 @@ import { AlertTriangle, Github, Loader2 } from 'lucide-react'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { useFormState } from '@/hooks/use-form-state'
 import { signInWithGithub } from '../actions'
+import { useSearchParams } from 'next/navigation'
 
 export default function SignInForm() {
     // const [{ success, message, errors }, formAction, isPading] = useActionState(
     //     signInWithEmailAndPassword,
     //     { success: true, message: null, errors: null }
     // )
+
+    const searchParams = useSearchParams()
     
     const [{success, errors, message}, handleSubmit, isPading] = useFormState(signInWithEmailAndPassword)
 
@@ -31,7 +34,7 @@ export default function SignInForm() {
                 )}
                 <div className='space-y-1'>
                     <Label htmlFor="email">E-mail</Label>
-                    <Input name='email' type='email' id='email' />
+                    <Input name='email' type='email' id='email' defaultValue={searchParams.get('email') || ''} />
 
                     {errors?.email && (
                         <p className='text-xs font-medium text-red-500 dark:text-red-400'>{errors.email[0]}</p>
