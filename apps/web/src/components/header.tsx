@@ -7,6 +7,7 @@ import { ability } from '@/auth/auth'
 import { Separator } from './ui/separator'
 import ThemeSwatcher from './theme/theme-swatcher'
 import ProjectSwatcher from './project-swatcher'
+import PeadingInvites from './peading-invites'
 
 export default async function Header() {
 
@@ -31,6 +32,7 @@ export default async function Header() {
             </div>
 
             <div className='flex items-center gap-4'>
+                <PeadingInvites />
                 <ThemeSwatcher />
                 <Separator orientation='vertical' className='h-5' />
                 <ProfileButton />
